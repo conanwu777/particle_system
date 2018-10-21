@@ -22,7 +22,7 @@ An openCL and openGL simulation of movement of millions of particles in space
 * Mouse scoll-wheel (up-down) to zoom in and out
 * Mouse scoll-wheel (left-right) to increase/decrease gravity
 
-
+![alt_text](change_gravity.gif)
 
 * Mouse click to add more gravity points
 * Key "C" to release grabity points
@@ -33,6 +33,10 @@ An openCL and openGL simulation of movement of millions of particles in space
 * Key "+", "-" to adjust the size of particles
 
 ![alt_text](pixels.gif)
+
+* Key "E" to stop/resume all gravity (all particles start travelling at current speed)
+
+![alt_text](explode.gif)
 
 ## Screen Shots
 
