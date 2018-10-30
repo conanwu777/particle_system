@@ -1,6 +1,6 @@
 #include "particle.hpp"
 
-float hsv[3] = {0, 1.0, 1.0};
+float hsv[3] = {0, .6, 1.0};
 t_bufs g_bufs;
 t_mass mouse;
 
