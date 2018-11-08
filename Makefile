@@ -19,7 +19,7 @@ all: $(NAME)
 
 $(NAME): $(SRC)
 	@echo $(YELLO)Making particle_system
-	@g++ -std=c++11 $(SRC) -o $(NAME) $(FRAMEWORKS) $(CL) $(BREW_INC) $(GLFW_LINK)
+	@g++ -std=c++11 $(SRC) -o $(NAME) $(FRAMEWORKS) $(CL) $(BREW_INC) $(GLFW_LINK) -fsanitize=address
 	@echo $(GREEN)Done!
 
 clean:

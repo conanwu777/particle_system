@@ -10,7 +10,7 @@
 #include <time.h>
 #include <exception>
 
-#define MAX_SOURCE_SIZE (0x100000)
+#define MAX_SOURCE_SIZE 10000
 # define RED "\e[1;38;2;225;20;20m"
 # define WHITE "\e[1;38;2;255;251;214m"
 # define YELLO "\e[1;38;2;255;200;0m"

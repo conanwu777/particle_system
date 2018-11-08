@@ -4,7 +4,7 @@ GLFWwindow *window;
 
 const unsigned int W = 1400;
 const unsigned int H = 1400;
-int		N = 1000000;
+int		N = 1000;
 
 int		db;
 bool	freezehue = 0;

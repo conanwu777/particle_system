@@ -152,7 +152,7 @@ void	glinit()
 	glfwSetMouseButtonCallback(window, button);
 	glfwSetScrollCallback(window, scroll);
 	glfwSetKeyCallback(window, keys);
-	g_bufs.pt = 1.5;
+	g_bufs.pt = 1;
 	glPointSize(g_bufs.pt);
 	glUseProgram(g_bufs.shaders);
 }
