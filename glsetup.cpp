@@ -36,7 +36,7 @@ void	cursor(GLFWwindow* window, double x, double y)
 void	button(GLFWwindow* window, int button, int action, int mods)
 {
 	if (button == GLFW_MOUSE_BUTTON_LEFT
-		&& action == GLFW_PRESS && mouse.n < 50)
+		&& action == GLFW_PRESS && mouse.n < 5)
 	{
 		mouse.m[2 * mouse.n] = mouse.x;
 		mouse.m[2 * mouse.n + 1] = mouse.y;
@@ -88,22 +88,18 @@ void	keys(GLFWwindow* window, int key, int scan, int action, int mods)
 		mouse.n = 0;
 	if (key == GLFW_KEY_F && action == GLFW_PRESS)
 		freezehue = !freezehue;
+	if (key == GLFW_KEY_N && action == GLFW_PRESS)
+		newParticles = !newParticles;
+	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
+		clReset();
 }
 
 void	keyholds(GLFWwindow *window)
 {
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		g_bufs.br = (g_bufs.br + 0.01 > 1 ? 1 : g_bufs.br + 0.01);
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		g_bufs.bg = (g_bufs.bg + 0.01 > 1 ? 1 : g_bufs.bg + 0.01);
 	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
-		g_bufs.bb = (g_bufs.bb + 0.01 > 1 ? 1 : g_bufs.bb + 0.01);
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-		g_bufs.br = (g_bufs.br - 0.01 < 0 ? 0 : g_bufs.br - 0.01);
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		g_bufs.bg = (g_bufs.bg - 0.01 < 0 ? 0 : g_bufs.bg - 0.01);
+		g_bufs.bl = (g_bufs.bl + 0.01 > 1 ? 1 : g_bufs.bl + 0.01);
 	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-		g_bufs.bb = (g_bufs.bb - 0.01 < 0 ? 0 : g_bufs.bb - 0.01);
+		g_bufs.bl = (g_bufs.bl - 0.01 < 0 ? 0 : g_bufs.bl - 0.01);
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		hsv[1] = (hsv[1] + 0.01 > 1 ? 1 : hsv[1] + 0.01);
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
@@ -112,6 +108,20 @@ void	keyholds(GLFWwindow *window)
 		hsv[2] = (hsv[2] + 0.01 > 1 ? 1 : hsv[2] + 0.01);
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 		hsv[2] = (hsv[2] - 0.01 < 0 ? 0 : hsv[2] - 0.01);
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		g_bufs.trans[14] += 0.02;
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		g_bufs.trans[14] -= 0.02;
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		mouse.z += 0.02;
+		g_bufs.trans[12] += 0.02;
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		mouse.z -= 0.02;
+		g_bufs.trans[12] -= 0.02;
+	}
 	if (glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_PRESS
 		|| glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_PRESS)
 	{
@@ -124,6 +134,7 @@ void	glinit()
 {
 	mouse.x = 0;
 	mouse.y = 0;
+	mouse.z = 0;
 	mouse.n = 0;
 	mouse.att = 0.05;
 	glfwInit();
@@ -135,6 +146,7 @@ void	glinit()
 	glfwMakeContextCurrent(window);
 	getcontext();
 	getshader(&g_bufs);
+	g_bufs.mat = glGetUniformLocation(g_bufs.shaders, "p");
 	g_bufs.mx = glGetUniformLocation(g_bufs.shaders, "mx");
 	g_bufs.my = glGetUniformLocation(g_bufs.shaders, "my");
 	g_bufs.hsv = glGetUniformLocation(g_bufs.shaders, "hsv");
@@ -152,7 +164,13 @@ void	glinit()
 	glfwSetMouseButtonCallback(window, button);
 	glfwSetScrollCallback(window, scroll);
 	glfwSetKeyCallback(window, keys);
-	g_bufs.pt = 1.5;
+	g_bufs.pt = 1;
+	g_bufs.camx[0] = 1;
+	g_bufs.camx[15] = 1;
+	g_bufs.camx[10] = 1;
+	g_bufs.camx[15] = 1;
+	g_bufs.p[0] = 1.0 / tan(90 / 2 * PI / 180);
+	g_bufs.p[5] = g_bufs.p[0];
 	glPointSize(g_bufs.pt);
 	glUseProgram(g_bufs.shaders);
 }
